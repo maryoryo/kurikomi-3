@@ -1,0 +1,45 @@
+<div class="container">
+  <h2><%= @group_post.title %></h2>
+
+  <div>
+    <h4>投稿者</h4>
+    <%= @group_post.user.name %>
+  </div>
+
+  <div>
+    <h4>作成日時</h4>
+    <%= @group_post.created_at.to_s(:datetime_jp) %>
+    <h4>更新日時</h4>
+    <%= @group_post.updated_at.to_s(:datetime_jp) %>
+  </div>
+
+  <div>
+    <%= @group_post.content %>
+  </div>
+  
+  <div>
+    <% @group_post_comments.each do |group_post_comment| %>
+      <%= attachment_image_tag group_post_comment.user, :profile_image, :fill, 60, 60, fallback: "no-image.png", size: "60x60" %>
+      <%= group_post_comment.user.name %>
+      <%= group_post_comment.comment %>
+      <%= link_to "削除", group_post_group_post_comment_path(@group_post.id, group_post_comment.id), method: :delete, class: "btn btn-sm btn-danger" %>
+    <% end %>
+  </div>
+  
+  <div>
+    <%= form_with model: @group_post_comment, url: group_post_group_post_comments_path(@group_post), local: true do |f| %>
+      <%=f.label :コメント %>
+      <%=f.text_field :comment %>
+      <%=f.submit "送信する",class:"btn btn-success" %>
+    <% end %>
+  </div>
+
+  <div>
+    <% if @group_post.user == current_user %>
+      <%= link_to "編集する", edit_group_group_post_path(@group_post.group, @group_post) %>
+      <%= link_to "削除する", group_group_post_path(@group_post.group, @group_post), method: :delete, "data-confirm" => "削除しますか？" %>
+    <% end %>
+    <%= link_to "グループトップへ", group_path(@group) %>
+  </div>
+
+</div>

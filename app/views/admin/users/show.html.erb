@@ -1,0 +1,29 @@
+<div class="container">
+  
+  <h2><%= @user.name %>さんのページ</h2>
+  <div class="row">
+    <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, fallback: "no-image.png", size: "60x60" %>
+    <div><%= @user.name %></div>
+  </div>
+  <table class="tabke">
+    <tbody>
+      <tr>
+        <td>概要</td>
+        <td><%= @user.introduction %></td>
+      </tr>
+      <tr>
+        <td>オススメ動画</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>参加コミュニティ</td>
+        <td>
+          <% @groups.each do |group| %>
+            <%= group.name %>
+          <% end %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+</div>
